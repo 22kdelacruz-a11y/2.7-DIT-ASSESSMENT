@@ -1,38 +1,32 @@
 #LISTS 
-admin_password = "pw"
-orders = {'Kian' : {'first_name' : 'Kian',
-                    'last_name' : 'Dela Cruz',
-                    'order_type' : 'Pick-up',
-                    'phone_number' : '123123123',
-                    'order' : ['Custom Burrito','Tortilla','Steak','White Rice','Pinto Beans','Guacamole','N/A']},
-                    
-          'Nhico' : {'first_name' : 'Nhico',
-                     'last_name' : 'Bigcas',
-                     'order_type' : 'Delivery',
-                     'phone_number' : '321321321',
-                     'order' : ['Custom Burrito Bowl','N/A','Chicken','Brown Rice','Black Beans','Sour Cream','Cheese']}}
+orders = {}
 custom = ["burrito", "bowl"]
-wraps = ['tortilla', 'veggie tortilla', 'gluten-free tortilla']
-proteins = ['steak', 'chicken', 'pork', 'veggie']
-rices = ['white rice', 'brown rice', 'cilantro-lime rice']
-beans = ['pinto beans', 'black beans', 'refried beans']
-toppings = ['guacamole', 'sour cream', 'cheese', 'n/a']
+wraps = ['Tortilla', 'Veggie', 'Cassava']
+proteins = ['Steak', 'Chicken', 'Pork', 'Veggie']
+rices = ['White', 'Brown', 'Black']
+beans = ['Pinto', 'Black', 'Refried']
+toppings = ['Guacamole', 'Sour Cream', 'Cheese', 'N/A']
+
 #FUNCTIONS
 def menu():                               
     """displays numbered menu"""
-    print(" ----------------------")
-    print("│ 1 - Make your own!   │ ")
-    print("│ 2 - Nachorrrito      │ ")
-    print("│ 3 - Special Bowl!!!  │ ")
-    print("│ 4 - Mad Salad        │ ")
-    print("│ 5 - Tacos            │ ")
-    print("│ 6 - Quesadillas      │ ")
-
+    print(" ----------------------------")
+    print("│ 1 - Make your own!   $18.99│ ")
+    print("│ 2 - Nachorrrito      $10.99│ ")
+    print("│ 3 - Special Bowl!!!  $12.99│ ")
+    print("│ 4 - Mad Salad        $9.99 │ ")
+    print("│ 5 - Tacos            $8.99 │ ")
+    print("│ 6 - Quesadillas      $11.99│ ")
+    print(" ----------------------------")
+    print()
 def view_info():
     """displays the info about the restaurant"""
-    print("""XXX is a restaurant chain based in YYY, XXX is full of balbalbal
-dasdawd""")
-
+    print("""Tortios is a restaurant chain based in Queenstown, and was establish in 2010. Tortios is most famously known for our 
+Make your own order!, where customers can choose their own wrap, protein, rice, beans, and toppings. We also have a variety
+of other menu items such as our Nachorrrito, Special Bowl!!!, Mad Salad, Tacos, and Quesadillas. We are open from 10am to
+10pm every day of the week. We also offer delivery and pick-up options for our customers. We hope to see you soon at
+Tortios!""")
+    print()
 def customer_program():
     """displays the different options the user could do if they had chose the customer program"""
     print("What would you like to do?")
@@ -45,196 +39,405 @@ def get_number():
     """a function to get the customer's phone number, this is used for both delivery and pick-up orders, this also checks if the input is valid and if it is not, it will ask the user to input again until they input a valid phone number"""
     while True:
         phone = input("Enter Phone Number (max 10 digits): ").strip()
-        
-        if not phone.isdigit():
-            print("Error: Phone number must only contain digits.")
-        
+        if not phone.isdigit():                     # checks if the input only contains digits, if it does not, it will ask the user to input again until they input a valid phone number
+            print("Error: Phone number must only contain digits. Try again.")                    
+            print()
         elif len(phone) > 10:
-            print(f"Error: Number is too long ({len(phone)} digits). Max is 10.")
-        
+            print(f"Error: Number is too long ({len(phone)} digits). Max is 10. Try again")              
+            print()
         elif len(phone) < 7: 
-            print("Error: Number is too short.")
+            print("Error: Number is too short, must be at least 7 digits. Try again.")                 
+            print()
         else:
             return phone
 
-def add_order():
-    """a function to add an order to the orders dictionary, this is where the user will input all of their order details and preferences"""
-    print("--- Place Your Order---")
-    first_name = input("Enter your first name: ")
-    last_name = input("Enter your last name: ")
-    while True: 
-        choice = input("For delivery(1) or pick-up?(2): ")   
-        if choice == "1":
-            order_type = "Delivery"
-            break
-        elif choice == "2":
-            order_type = "Pick-up"
-            break
-        else:
-            print("Invalid input, Try again.")
-    phone = get_number() 
+def add_order(): 
+    """This function contains all the code needed for the add order options menu"""
     print("Now, let's build your order!")
     menu()
     menu_choice = input("Enter the number of the menu item you want to order: ")
     if menu_choice == "1":
-        order_choice = input("Would you like to make a custom burrito or a custom burrito bowl? (Burrito/Bowl) ").lower()
-        if order_choice not in custom:
-            print("Invalid input, Try again.")
+        print()
+        print("--- Place Your Order ---")
+        first_name = input("Enter your first name: ").title()
+        last_name = input("Enter your last name: ").title()
+        while True:                 # the while loop is used to repeat the code until the user inputs a valid option.
+            choice = input("For delivery(1) or pick-up?(2): ")   
+            if choice == "1":
+                order_type = "Delivery"
+                break
+            elif choice == "2":
+                order_type = "Pick-up"
+                break
+            else:                    
+                print("Invalid input, Try again.")
+                print()
+        phone = get_number() 
+        while True:              # the while loop is used to repeat the code until the user inputs a valid option.
+            order_choice = input("Would you like to make a custom burrito or a custom burrito bowl? (Burrito/Bowl) ").lower()
+            if order_choice not in custom:
+                print("Invalid input, Try again.")
+                print()
+            else:         
+                print("Alright!")   
+                print()    
+                break
         if order_choice == "burrito":
-            while True:
-                burrito = "Custom Burrito"
-                wrap_choice = input("Choose a wrap (tortilla, veggie tortilla, gluten-free tortilla): ").lower()
+            while True:                                   # the while loop is used to repeat the code until the user inputs a valid option.
+                custom_order = "Custom Burrito"
+                wrap_choice = input("Choose a wrap (Tortilla, Veggie, Cassava): ").title()
                 if wrap_choice not in wraps:
                     print("Invalid wrap choice. Please try again.")
+                    print()                
                 else:
+                    print("Alright!")
+                    print()
                     break
-            while True:
-                protein_choice = input("Choose a protein (steak, chicken, pork, veggie): ").lower()
+            while True:                          # the while loop is used to repeat the code until the user inputs a valid option.
+                protein_choice = input("Choose a protein (Steak, Chicken, Pork, Veggie): ").title()
                 if protein_choice not in proteins:
                     print("Invalid protein choice. Please try again.")
+                    print()
                 else:
+                    print("Alright!")
+                    print()
                     break
-            while True:
-                rice_choice = input("Choose a rice (white rice, brown rice, cilantro-lime rice): ").lower()
+            while True:                       # the while loop is used to repeat the code until the user inputs a valid option.
+                rice_choice = input("Choose a rice (White, Brown, Black): ").title()
                 if rice_choice not in rices:
                     print("Invalid rice choice. Please try again.")
+                    print()
                 else:
+                    print("Alright!")
+                    print()
                     break
-            while True:
-                beans_choice = input("Choose a bean (pinto beans, black beans, refried beans): ").lower()
+            while True:                                               # the while loop is used to repeat the code until the user inputs a valid option.
+                beans_choice = input("Choose a bean (Pinto, Black, Refried): ").title()
                 if beans_choice not in beans:
-                    print("Invalid bean choice. Please try again.")
+                    print("Invalid bean choice. Please try again.")           
+                    print() 
                 else:
+                    print("Alright!")
+                    print()
                     break
-            while True:
-                topping_choice = input("Choose a topping (guacamole, sour cream, cheese, n/a): ").lower()
+            while True:                                              # the while loop is used to repeat the code until the user inputs a valid option.
+                topping_choice = input("Choose a topping (Guacamole, Sour Cream, Cheese, N/A): ").title()
                 if topping_choice not in toppings:
-                    print("Invalid topping choice. Please try again.")
+                    print("Invalid topping choice. Please try again.")                     
+                    print()
                 else:
+                    print("Alright!")
+                    print()
                     break
-            orders[first_name] = {'first_name' : first_name,
-                                'last_name' : last_name,
-                                'order_type' : order_type,
-                                'phone_number' : phone,
-                                'order' : [burrito, wrap_choice, protein_choice, rice_choice, beans_choice, topping_choice]}
-            print("Order placed successfully!")
-            print(orders)
+
+            print("Order placed successfully!")        # prints the order for the user to see after they place it
+            order_id = first_name + phone
+            orders[order_id] = {
+            'first_name': first_name,
+            'last_name': last_name,
+            'order_type': order_type,
+            'phone_number': phone,
+            'order': [custom_order, wrap_choice, protein_choice, rice_choice, beans_choice, topping_choice]
+                }
+            order_data = orders[order_id]
+
+            print("\n===== ORDER RECEIPT =====")
+            print(f"Name: {order_data['first_name']} {order_data['last_name']}")
+            print(f"Order Type: {order_data['order_type']}")
+            print(f"Phone: {order_data['phone_number']}")
+
+            print("\n--- Item Details ---")
+            print(f"Item: {order_data['order'][0]}")
+            print(f"Wrap: {order_data['order'][1]}")
+            print(f"Protein: {order_data['order'][2]}")
+            print(f"Rice: {order_data['order'][3]}")
+            print(f"Beans: {order_data['order'][4]}")
+            print(f"Topping: {order_data['order'][5]}")
+            print("Price: $18.99")
+            print("==========================")
+            print()
         elif order_choice == "bowl":
-            bowl = "Custom Burrito Bowl"
+            custom_order = "Custom Burrito Bowl"
             wrap_choice = "N/A"
-            while True:
-                protein_choice = input("Choose a protein (steak, chicken, pork, veggie): ").lower()
+            while True:                          # the while loop is used to repeat the code until the user inputs a valid option.
+                protein_choice = input("Choose a protein (Steak, Chicken, Pork, Veggie): ").title()
                 if protein_choice not in proteins:
-                    print("Invalid protein choice. Please try again.")
+                    print("Invalid protein choice. Please try again.")                  
+                    print()
                 else:
+                    print("Alright!")
+                    print()
                     break
-            while True:
-                rice_choice = input("Choose a rice (white rice, brown rice, cilantro-lime rice): ").lower()
+            while True:                                   # the while loop is used to repeat the code until the user inputs a valid option.
+                rice_choice = input("Choose a rice (White, Brown, Black): ").title()
                 if rice_choice not in rices:
-                    print("Invalid rice choice. Please try again.")
+                    print("Invalid rice choice. Please try again.")                
                 else:
+                    print("Alright!")
+                    print()
                     break
-            while True:
-                beans_choice = input("Choose a bean (pinto beans, black beans, refried beans): ").lower()
+            while True:                                     # the while loop is used to repeat the code until the user inputs a valid option.
+                beans_choice = input("Choose a bean (Pinto, Black, Refried): ").title()
                 if beans_choice not in beans:
-                    print("Invalid bean choice. Please try again.")
+                    print("Invalid bean choice. Please try again.")                    
+                    print()
                 else:
+                    print("Alright!")
+                    print()
                     break
-            while True:
-                topping_choice = input("Choose a topping (guacamole, sour cream, cheese, n/a): ").lower()
+            while True:                                       # the while loop is used to repeat the code until the user inputs a valid option.
+                topping_choice = input("Choose a topping (Guacamole, Sour Cream, Cheese, N/A): ").title()
                 if topping_choice not in toppings:
-                    print("Invalid topping choice. Please try again.")
+                    print("Invalid topping choice. Please try again.")               
+                    print()
                 else:
+                    print("Alright!")
+                    print()
                     break
             orders[first_name] = {'first_name' : first_name,
                                 'last_name' : last_name,
                                 'order_type' : order_type,
                                 'phone_number' : phone,
-                                'order' : [bowl, wrap_choice, protein_choice, rice_choice, beans_choice, topping_choice]}
-            print("Order placed successfully!")
-            print(orders) # CHANGE FORMATTING LATER
-        else:
-            print("Invalid input, Try again.")
-    print(f"Thank you for your order, {first_name}! Your order details are as follows:")
-    print(f"Name: {first_name} {last_name}")
-    print(f"Order Type: {order_type}")
-    print(f"Phone Number: {phone}")
-    print(f"Wrap: {orders[first_name]['order'][1]}")
-    print(f"Protein: {orders[first_name]['order'][2]}")
-    print(f"Rice: {orders[first_name]['order'][3]}")
-    print(f"Beans: {orders[first_name]['order'][4]}")
-    print(f"Topping: {orders[first_name]['order'][5]}")
+                                'order' : [custom_order, wrap_choice, protein_choice, rice_choice, beans_choice, topping_choice]}
+            
+            print("Order placed successfully!")        # prints the order for the user to see after they place it
+            order_id = first_name + phone
+            orders[order_id] = {
+            'first_name': first_name,
+            'last_name': last_name,
+            'order_type': order_type,
+            'phone_number': phone,
+            'order': [custom_order, wrap_choice, protein_choice, rice_choice, beans_choice, topping_choice]
+                }
+            order_data = orders[order_id]
 
-def admin_program():
-    print("What would you like to do?")
-    print("1. View orders.")
-    print("2. Cancel orders.")
-    print("3. Confirm orders.")
-    print("4. Exit")
+            print("\n===== ORDER RECEIPT =====")
+            print(f"Name: {order_data['first_name']} {order_data['last_name']}")
+            print(f"Order Type: {order_data['order_type']}")
+            print(f"Phone: {order_data['phone_number']}")
 
-def get_user():  
-    """a function to check if the one handling the website is a customer or an employee/staff"""
-    print()
-    print("               -------------------------")
-    print("Welcome to n/a! Are you the admin or a customer?")
-    while True:
-        user = input(": ").lower()   # all of the printed statements are temporary
-        if user == "customer":
-            return user
-        elif user == "admin":
+            print("\n--- Item Details ---")
+            print(f"Item: {order_data['order'][0]}")
+            print(f"Wrap: {order_data['order'][1]}")
+            print(f"Protein: {order_data['order'][2]}")
+            print(f"Rice: {order_data['order'][3]}")
+            print(f"Beans: {order_data['order'][4]}")
+            print(f"Topping: {order_data['order'][5]}")
+            print("Price: $18.99")
+            print("==========================")
             print()
-            print("In order to access the admin account, you would need to enter a password. To return, input X.")      # password system
-            pw_input = input("Enter the password: ").lower()     
-            if pw_input == admin_password:
-                print()
-                print("               -------------------------")
-                print("Welcome!")
-                return user
-            if pw_input == "x":
-                print()
-                print("               -------------------------")
-                print("Welcome to n/a! Are you  the admin or a customer?")
-                continue
+        
+    elif menu_choice == '2':
+        print()
+        print("--- Place Your Order ---")
+        first_name = input("Enter your first name: ").title()
+        last_name = input("Enter your last name: ").title()
+        while True:            # the while loop is used to repeat the code until the user inputs a valid option.
+            choice = input("For delivery(1) or pick-up?(2): ")   
+            if choice == "1":
+                order_type = "Delivery"
+                break
+            elif choice == "2":
+                order_type = "Pick-up"
+                break
             else:
+                print("Invalid input, Try again.")
                 print()
-                print("Incorrect password. Try again.")
-                print("Welcome to n/a! Are you  the admin or a customer?")
-        else:
-            print()
-            print('You must input either "Customer" or "Admin", Try again.')
+        phone = get_number() 
+
+        order_id = first_name + phone
+        orders[order_id] = {
+        'first_name': first_name,
+        'last_name': last_name,
+        'order_type': order_type,
+        'phone_number': phone,
+        'order': []
+            }
+        order_data = orders[order_id]
+        print("\n===== ORDER RECEIPT =====")
+        print(f"Name: {order_data['first_name']} {order_data['last_name']}")
+        print(f"Order Type: {order_data['order_type']}")
+        print(f"Phone: {order_data['phone_number']}")
+        print("\n--- Item Details ---")
+        print("Item: Nachorrrito")
+        print("Price: $10.99")
+        print("==========================")
+        print()
+
+    elif menu_choice == '3':
+        print()
+        print("--- Place Your Order ---")
+        first_name = input("Enter your first name: ").title()
+        last_name = input("Enter your last name: ").title()
+        while True:                                 # the while loop is used to repeat the code until the user inputs a valid option.
+            choice = input("For delivery(1) or pick-up?(2): ")   
+            if choice == "1":
+                order_type = "Delivery"
+                break
+            elif choice == "2":
+                order_type = "Pick-up"
+                break
+            else:
+                print("Invalid input, Try again.")
+                print()
+        phone = get_number() 
+
+        order_id = first_name + phone
+        orders[order_id] = {
+        'first_name': first_name,
+        'last_name': last_name,
+        'order_type': order_type,
+        'phone_number': phone,
+        'order': []
+            }
+        order_data = orders[order_id]
+        print("\n===== ORDER RECEIPT =====")
+        print(f"Name: {order_data['first_name']} {order_data['last_name']}")
+        print(f"Order Type: {order_data['order_type']}")
+        print(f"Phone: {order_data['phone_number']}")
+        print("\n--- Item Details ---")
+        print("Item: Special Bowl!!!")
+        print("Price: $12.99")
+        print("==========================")
+        print()
+
+    elif menu_choice == '4':
+        print()
+        print("--- Place Your Order ---")
+        first_name = input("Enter your first name: ").title()
+        last_name = input("Enter your last name: ").title()
+        while True:                          # the while loop is used to repeat the code until the user inputs a valid option.
+            choice = input("For delivery(1) or pick-up?(2): ")   
+            if choice == "1":
+                order_type = "Delivery"
+                break
+            elif choice == "2":
+                order_type = "Pick-up"
+                break
+            else:
+                print("Invalid input, Try again.")
+                print()
+        phone = get_number() 
+
+        order_id = first_name + phone
+        orders[order_id] = {
+        'first_name': first_name,
+        'last_name': last_name,
+        'order_type': order_type,
+        'phone_number': phone,
+        'order': []
+            }
+        order_data = orders[order_id]
+        print("\n===== ORDER RECEIPT =====")
+        print(f"Name: {order_data['first_name']} {order_data['last_name']}")
+        print(f"Order Type: {order_data['order_type']}")
+        print(f"Phone: {order_data['phone_number']}")
+        print("\n--- Item Details ---")
+        print("Item: Mad Salad")
+        print("Price: $9.99")
+        print("==========================")
+        print()
+
+    elif menu_choice == '5':
+        print()
+        print("--- Place Your Order ---")
+        first_name = input("Enter your first name: ").title()
+        last_name = input("Enter your last name: ").title()
+        while True: 
+            choice = input("For delivery(1) or pick-up?(2): ")   
+            if choice == "1":
+                order_type = "Delivery"
+                break
+            elif choice == "2":
+                order_type = "Pick-up"
+                break
+            else:
+                print("Invalid input, Try again.")
+                print()
+        phone = get_number() 
+
+        order_id = first_name + phone
+        orders[order_id] = {
+        'first_name': first_name,
+        'last_name': last_name,
+        'order_type': order_type,
+        'phone_number': phone,
+        'order': []
+            }
+        order_data = orders[order_id]
+        print("\n===== ORDER RECEIPT =====")
+        print(f"Name: {order_data['first_name']} {order_data['last_name']}")
+        print(f"Order Type: {order_data['order_type']}")
+        print(f"Phone: {order_data['phone_number']}")
+        print("\n--- Item Details ---")
+        print("Item: Tacos")
+        print("Price: $8.99")
+        print("==========================")
+        print()
+
+    elif menu_choice == '6':
+        print()
+        print("--- Place Your Order ---")
+        first_name = input("Enter your first name: ").title()   
+        last_name = input("Enter your last name: ").title()
+        while True: 
+            choice = input("For delivery(1) or pick-up?(2): ")   
+            if choice == "1":
+                order_type = "Delivery"
+                break
+            elif choice == "2":
+                order_type = "Pick-up"
+                break
+            else:
+                print("Invalid input, Try again.")
+                print()
+        phone = get_number() 
+
+        order_id = first_name + phone
+        orders[order_id] = {
+        'first_name': first_name,
+        'last_name': last_name,
+        'order_type': order_type,
+        'phone_number': phone,
+        'order': []
+            }
+        order_data = orders[order_id]
+        print("\n===== ORDER RECEIPT =====")
+        print(f"Name: {order_data['first_name']} {order_data['last_name']}")
+        print(f"Order Type: {order_data['order_type']}")
+        print(f"Phone: {order_data['phone_number']}")
+        print("\n--- Item Details ---")
+        print("Item: Quesadillas")
+        print("Price: $11.99")
+        print("==========================")
+        print()
+
+    else:
+        print("Invalid input, Try again.")
+        print("Invalid menu choice, Try again.")
+
+    
+
 
 #START OF THE PROGRAM
 
-user = get_user()
 
-if user == "customer":
-    print("               -------------------------")
-    print("Welcome to xxx!")
-    while True:
-        customer_program()
-        customer_input = input(": ")
-        if customer_input == "1":
-            menu()
-        elif customer_input == "2":
-            add_order()
-        elif customer_input == "3":
-            view_info()
-        elif customer_input == "4":
-            break
-        else:
-            print("Invalid input, Try again.")
 
-if user == "admin":
-    while True:
-        admin_program()
-        admin_input = input(": ")
-        if admin_input == "1":
-            pass
-        elif admin_input == "2":
-            pass
-        elif admin_input == "3":
-            pass
-        elif admin_input == "4":
-            break
-        else:
-            print("Invalid input, Try again.")
+print("               -------------------------")
+print("Welcome to Tortios!")
+while True:
+    customer_program()
+    customer_input = input(": ")
+    if customer_input == "1":
+        menu()
+    elif customer_input == "2":
+        add_order()
+    elif customer_input == "3":
+        view_info()
+    elif customer_input == "4":
+        print("Thank you for visiting Tortios, have a great day!")
+        break
+    else:
+        print("Invalid input, Try again.")
+        print()
+
